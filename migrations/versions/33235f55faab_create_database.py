@@ -2,7 +2,7 @@
 Create database
 
 Revision ID: 33235f55faab
-Revises: 
+Revises:
 Create Date: 2022-04-12 11:39:29.055650
 """
 

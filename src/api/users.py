@@ -1,9 +1,12 @@
+from datetime import date
 from typing import List
 
-from fastapi import APIRouter, status, Depends, Path
+from fastapi import APIRouter, Depends, Path, status
 
 from src.api.protocols import UserServiceProtocol
-from src.user.models import UserResponseV1, UserAddRequestV1
+from src.user.models import (
+    UserAddRequestV1, UserResponseV1, UserStatsResponseV1
+    )
 
 router = APIRouter(
     tags=['Users']
@@ -35,11 +38,51 @@ def get_user(
     return user_service.get_user_by_id(id)
 
 
+@router.get(
+    path='/v1/users/{id}/stats',
+    response_model=UserResponseV1,
+    summary='Информация о репозиториях пользователя.',
+    description='Возвращает информацию о репозиториях пользователя.'
+)
+def get_stats_by_user(
+        id: int = Path(..., ge=1),
+        user_service: UserServiceProtocol = Depends()
+):
+    response = UserStatsResponseV1(
+        user=user_service.get_user_by_id(id),
+        stats=user_service.get_stats_by_user(id)
+    )
+    return response
+
+
+@router.get(
+    path='/v1/users/{id}/stats/from={date_from}&to={date_to}',
+    response_model=UserResponseV1,
+    summary='Информация о репозиториях пользователя за заданный период.',
+    description='Возвращает информацию о репозиториях \
+        пользователя за заданный период.'
+)
+def get_stats_by_user_and_period(
+        id: int = Path(..., ge=1),
+        date_from: date = Path(...),
+        date_to: date = Path(...),
+        user_service: UserServiceProtocol = Depends()
+):
+    response = UserStatsResponseV1(
+        user=user_service.get_user_by_id(id),
+        stats=user_service.get_stats_by_user_and_period(
+            id, date_from, date_to
+            )
+    )
+    return response
+
+
 @router.put(
     path='/v1/users',
     status_code=status.HTTP_201_CREATED,
     summary='Добавить пользователя',
-    description='Добавляет пользователя для отслеживания популярности репозиториев.',
+    description='Добавляет пользователя для отслеживания \
+        популярности репозиториев.',
 )
 def add_user(
         user_data: UserAddRequestV1,

@@ -5,18 +5,18 @@ metadata = sa.MetaData()
 users = sa.Table(
     'user',
     metadata,
-    sa.Column('id', sa.Integer, primary_key=True),
+    sa.Column('id', sa.BigInteger, primary_key=True),
     sa.Column('login', sa.String, nullable=False),
     sa.Column('name', sa.String, nullable=False)
 )
 
-repositories = sa.Table(
-    'repository',
+stats = sa.Table(
+    'stats',
     metadata,
-    sa.Column('id', sa.Integer, primary_key=True),
-    sa.Column('user_id', sa.Integer, sa.ForeignKey('user.id'), nullable=False),
-    sa.Column('date', sa.Date, nullable=False, index=True),
+    sa.Column('user_id', sa.BigInteger, sa.ForeignKey('user.id'), nullable=False),
+    sa.Column('repo_id', sa.BigInteger, primary_key=True),
+    sa.Column('date', sa.Date, nullable=False, primary_key=True),
     sa.Column('stargazers', sa.Integer, nullable=False),
     sa.Column('forks', sa.Integer, nullable=False),
-    sa.Column('watchers', sa.Integer, nullable=False),
+    sa.Column('watchers', sa.Integer, nullable=False)
 )

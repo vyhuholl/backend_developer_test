@@ -1,9 +1,8 @@
 from datetime import date
 from typing import List
 
-from src.user.models import (
-    UserAddRequestV1, UserResponseV1, StatsAddRequestV1, StatsResponseV1
-    )
+from src.user.models import (StatsAddRequestV1, StatsResponseV1,
+                             UserAddRequestV1, UserResponseV1)
 
 
 class UserServiceProtocol:

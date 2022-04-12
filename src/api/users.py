@@ -4,9 +4,8 @@ from typing import List
 from fastapi import APIRouter, Depends, Path, status
 
 from src.api.protocols import UserServiceProtocol
-from src.user.models import (
-    UserAddRequestV1, UserResponseV1, UserStatsResponseV1
-    )
+from src.user.models import (UserAddRequestV1, UserResponseV1,
+                             UserStatsResponseV1)
 
 router = APIRouter(
     tags=['Users']

@@ -5,9 +5,7 @@ from sqlalchemy import and_, delete, insert, select
 from sqlalchemy.future import Engine
 
 from src.database import tables
-from src.user.models import (
-    UserAddRequestV1, UserResponseV1, StatsResponseV1
-    )
+from src.user.models import StatsResponseV1, UserAddRequestV1, UserResponseV1
 
 
 class UserService:
